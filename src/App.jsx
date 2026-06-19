@@ -13,7 +13,7 @@ const projects = [
     title: "Askence",
     desc: "Web arama sonuçlarını analiz ederek kaynak gösterimli yapay zeka yanıtları üreten sohbet uygulaması.",
     tech: ["Flutter", "FastAPI", "Python", "Web Socket", "Google Gemini API"],
-    images: ["/askence1.png",],
+    images: ["/askence1.png", "/askence2.png",],
     github: "https://github.com/sedefcabuk/askence",
   },
   {

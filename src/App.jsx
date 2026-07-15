@@ -94,10 +94,23 @@ function ProjectImages({ images, title }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lightbox, setLightbox] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   // Swipe (dokunma) takibi için ref'ler
   const touchStartX = useRef(null);
   const touchDeltaX = useRef(0);
+
+  useEffect(() => {
+    const check = () =>
+      setIsTouchDevice(
+        typeof window !== "undefined" &&
+          (("ontouchstart" in window) || navigator.maxTouchPoints > 0) &&
+          window.innerWidth <= 768
+      );
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const goTo = (index) => setCurrentIndex(index);
   const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -188,15 +201,16 @@ function ProjectImages({ images, title }) {
           ))}
         </div>
 
-        {images.length > 1 && (
+        {images.length > 1 && !isTouchDevice && (
           <>
             <button
               onClick={prev}
               style={{
-                position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)",
-                background: "rgba(0,0,0,0.75)", color: "#fff", border: "none",
-                width: 44, height: 44, borderRadius: "50%", cursor: "pointer",
-                fontSize: 20, zIndex: 10,
+                position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)",
+                background: "rgba(0,0,0,0.35)", color: "rgba(255,255,255,0.85)", border: "none",
+                width: 30, height: 30, borderRadius: "50%", cursor: "pointer",
+                fontSize: 14, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center",
+                backdropFilter: "blur(2px)",
               }}
             >
               ←
@@ -204,10 +218,11 @@ function ProjectImages({ images, title }) {
             <button
               onClick={next}
               style={{
-                position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)",
-                background: "rgba(0,0,0,0.75)", color: "#fff", border: "none",
-                width: 44, height: 44, borderRadius: "50%", cursor: "pointer",
-                fontSize: 20, zIndex: 10,
+                position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)",
+                background: "rgba(0,0,0,0.35)", color: "rgba(255,255,255,0.85)", border: "none",
+                width: 30, height: 30, borderRadius: "50%", cursor: "pointer",
+                fontSize: 14, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center",
+                backdropFilter: "blur(2px)",
               }}
             >
               →

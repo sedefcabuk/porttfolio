@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const projects = [
   {
@@ -95,6 +95,10 @@ function ProjectImages({ images, title }) {
   const [lightbox, setLightbox] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Swipe (dokunma) takibi için ref'ler
+  const touchStartX = useRef(null);
+  const touchDeltaX = useRef(0);
+
   const goTo = (index) => setCurrentIndex(index);
   const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
   const prev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -104,6 +108,29 @@ function ProjectImages({ images, title }) {
     const interval = setInterval(next, 3000);
     return () => clearInterval(interval);
   }, [currentIndex, images.length, isPaused]);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchDeltaX.current = 0;
+    setIsPaused(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (touchStartX.current === null) return;
+    touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+  };
+
+  const handleTouchEnd = () => {
+    const threshold = 40; // px, kaydırmanın algılanması için minimum mesafe
+    if (touchDeltaX.current > threshold) {
+      prev();
+    } else if (touchDeltaX.current < -threshold) {
+      next();
+    }
+    touchStartX.current = null;
+    touchDeltaX.current = 0;
+    setIsPaused(false);
+  };
 
   return (
     <div style={{ marginBottom: 28 }}>
@@ -115,9 +142,13 @@ function ProjectImages({ images, title }) {
           background: "#1A1A1A",
           border: "1px solid #2A2A2A",
           maxHeight: "480px",
+          touchAction: "pan-y", // dikey scroll'u engellemeden yatay swipe'a izin ver
         }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <div
           style={{
@@ -142,12 +173,15 @@ function ProjectImages({ images, title }) {
                 src={src}
                 alt={`${title} ${i + 1}`}
                 onClick={() => setLightbox(src)}
+                draggable={false}
                 style={{
                   maxWidth: "100%",
                   maxHeight: "460px",
                   objectFit: "contain",   // ← Kırpılmadan tam görünüyor
                   display: "block",
                   cursor: "zoom-in",
+                  userSelect: "none",
+                  WebkitUserDrag: "none",
                 }}
               />
             </div>

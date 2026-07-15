@@ -13,16 +13,6 @@ const projects = [
     github: "https://github.com/sedefcabuk/chat-app",
   },
   {
-    title: { tr: "Askence", en: "Askence" },
-    desc: {
-      tr: "Web arama sonuçlarını analiz ederek kaynak gösterimli yapay zeka yanıtları üreten sohbet uygulaması.",
-      en: "A chat application that analyzes web search results and generates AI responses with source citations.",
-    },
-    tech: ["Flutter", "FastAPI", "Python", "Web Socket", "Google Gemini API"],
-    images: ["/askence1.png", "/askence2.png"],
-    github: "https://github.com/sedefcabuk/askence",
-  },
-  {
     title: { tr: "Cooklio", en: "Cooklio" },
     desc: {
       tr: "Kullanıcı dostu yemek tarifi uygulaması.",
@@ -32,6 +22,17 @@ const projects = [
     images: ["/cooklio1.jpeg", "/cooklio2.jpeg", "/cooklio6.jpeg", "/cooklioo3.jpeg", "/cooklio4.jpeg", "/cooklio5.jpeg", "/cooklio3.jpeg"],
     github: "https://github.com/sedefcabuk/cooklio",
   },
+  {
+    title: { tr: "Askence", en: "Askence" },
+    desc: {
+      tr: "Web arama sonuçlarını analiz ederek kaynak gösterimli yapay zeka yanıtları üreten sohbet uygulaması.",
+      en: "A chat application that analyzes web search results and generates AI responses with source citations.",
+    },
+    tech: ["Flutter", "FastAPI", "Python", "Web Socket", "Google Gemini API"],
+    images: ["/askence1.png", "/askence2.png"],
+    github: "https://github.com/sedefcabuk/askence",
+  },
+  
 ];
 
 const translations = {

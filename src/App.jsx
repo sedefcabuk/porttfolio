@@ -15,8 +15,8 @@ const projects = [
   {
     title: { tr: "Cooklio", en: "Cooklio" },
     desc: {
-      tr: "Kullanıcı dostu yemek tarifi uygulaması.",
-      en: "A user-friendly recipe application.",
+      tr: "Kimlik doğrulama, favorilere ekleme ve tarif arama özelliklerine sahip mobil yemek tarifi uygulaması.",
+      en: "A mobile recipe application featuring authentication, favorites and recipe search.",
     },
     tech: ["React Native", "Expo", "Node.js", "Express.js", "PostgreSQL"],
     images: ["/cooklio1.jpeg", "/cooklio2.jpeg", "/cooklio6.jpeg", "/cooklioo3.jpeg", "/cooklio4.jpeg", "/cooklio5.jpeg", "/cooklio3.jpeg"],
@@ -28,7 +28,7 @@ const projects = [
       tr: "Web arama sonuçlarını analiz ederek kaynak gösterimli yapay zeka yanıtları üreten sohbet uygulaması.",
       en: "A chat application that analyzes web search results and generates AI responses with source citations.",
     },
-    tech: ["Flutter", "FastAPI", "Python", "Web Socket", "Google Gemini API"],
+    tech: ["Flutter", "FastAPI", "Python", "WebSocket", "Google Gemini API"],
     images: ["/askence1.png", "/askence2.png"],
     github: "https://github.com/sedefcabuk/askence",
   },
@@ -49,7 +49,7 @@ const translations = {
   },
   en: {
     role: "Software Developer",
-    bio: "Computer Engineering graduate. I work in software development with a focus on mobile and web technologies.",
+    bio: "Computer Engineering graduate focused on developing mobile and web applications.",
     projects: "PROJECTS",
     liveDemo: "🌐 Live Demo",
     github: "💻 GitHub",
@@ -259,6 +259,26 @@ export default function App() {
   const [lang, setLang] = useState("tr");
 
   useEffect(() => {
+  document.title =
+    lang === "tr"
+      ? "Sedef Çabuk | Yazılım Geliştirici"
+      : "Sedef Çabuk | Software Developer";
+
+  const metaDescription = document.querySelector(
+    'meta[name="description"]'
+  );
+
+  if (metaDescription) {
+    metaDescription.setAttribute(
+      "content",
+      lang === "tr"
+        ? "Bilgisayar Mühendisliği mezunuyum. Mobil ve web teknolojilerine ağırlık vererek yazılım geliştirme alanında çalışıyorum."
+        : "Computer Engineering graduate focused on developing mobile and web applications."
+    );
+  }
+}, [lang]);
+
+  useEffect(() => {
     const browserLang = navigator.language || navigator.userLanguage || "en";
     setLang(browserLang.toLowerCase().startsWith("tr") ? "tr" : "en");
   }, []);
@@ -322,7 +342,7 @@ export default function App() {
           <div
             key={p.title.en}
             style={{
-              padding: "48px 0",
+              padding: idx === projects.length - 1 ? "48px 0 8px" : "48px 0",
               borderTop: "0.5px solid #1E1E1E",
               borderBottom: idx === projects.length - 1 ? "0.5px solid #1E1E1E" : "none",
             }}
@@ -379,7 +399,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: "60px 48px", borderTop: "0.5px solid #222" }}>
+      <footer style={{ padding: "18px 48px 48px", borderTop: "0.5px solid #222" }}>
         <p style={{ margin: "10px 0", fontSize: 15 }}>{t.email}</p>
         <p style={{ margin: "10px 0" }}>
           <a href="https://www.linkedin.com/in/sedef-cabuk-b5776a234/" target="_blank" rel="noopener noreferrer" style={{ color: "#6B6EF0", textDecoration: "none" }}>
